@@ -57,7 +57,7 @@ jobs:
   Upload_S3:
     name: 'Upload_S3'
     runs-on: ubuntu-latest
-    # environment: ${{ github.ref_name }}
+    environment: ${{ github.ref_name }}
     env:
       TF_VAR_commit_id: ${{ github.sha }}
     steps:
@@ -84,5 +84,5 @@ jobs:
       - name: Zip sequence code and upload to S3
         working-directory: ./test/sequence
         run: |
-            zip -qq -r sequence_${{ github.ref_name }}.zip ./
-            aws s3 cp sequence_${{ github.ref_name }}.zip s3://${{ vars[format('AWS_S3_BUCKET_CODE_{0}', env.WORKSPACE)] }}/${{ vars.AWS_S3_BUCKET_FOLDER }}
+            zip -qq -r sequence_${{ github.ref_name }}_${{ github.sha }}.zip ./
+            aws s3 cp sequence_${{ github.ref_name }}_${{ github.sha }}.zip s3://${{ vars[format('AWS_S3_BUCKET_CODE_{0}', env.WORKSPACE)] }}/${{ vars.AWS_S3_BUCKET_FOLDER }}
