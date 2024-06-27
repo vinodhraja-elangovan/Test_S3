@@ -19,7 +19,7 @@ on:
     paths:
      - '/test/sequence/**'
 
-     - '.github/workflows/code-deploy.yml'
+     - '.github/workflows/upload-s3.yml'
     
   # release:
   #     types:
