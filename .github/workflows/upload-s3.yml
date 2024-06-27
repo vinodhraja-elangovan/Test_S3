@@ -17,8 +17,7 @@ on:
       # - prod
       - dev
     paths:
-     - './test/sequence/**'
-
+     - 'test/sequence/**'
      - '.github/workflows/upload-s3.yml'
     
   # release:
