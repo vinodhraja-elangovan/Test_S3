@@ -57,7 +57,7 @@ jobs:
   Upload_S3:
     name: 'Upload_S3'
     runs-on: ubuntu-latest
-    environment: ${{ github.ref_name }}
+    # environment: ${{ github.ref_name }}
     env:
       TF_VAR_commit_id: ${{ github.sha }}
     steps:
