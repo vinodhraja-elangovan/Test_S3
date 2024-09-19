@@ -1,8 +1,14 @@
 
 	  
+<<<<<<< HEAD
 terraform state push errored.tfstate
 	123  
 layers/benchling-sdk-python.zip
+=======
+# terraform state push errored.tfstate
+	  000
+layers/benchling-sdk-python1.zip
+>>>>>>> ff9b7623402581d0bba65b34ed59a2c2bd049dd0
 sequence-annotation-bulk/sequence_annotation/__init__.py
 sequence-annotation-bulk/sequence_annotation/app.py
 sequence-annotation-bulk/sequence_annotation/flows/__init__.py

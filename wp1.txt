@@ -4,7 +4,19 @@
       #   run: |
       #     if [ -f "errored.tfstate" ]; then
       #       terraform state push errored.tfstate
+<<<<<<< HEAD
       #     fi
 
 
       test
+=======
+    
+
+
+
+      add contents1
+      1
+      2
+3
+4
+>>>>>>> ff9b7623402581d0bba65b34ed59a2c2bd049dd0
