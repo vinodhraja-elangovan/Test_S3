@@ -1,88 +1,88 @@
-###########################################################################################
-# Workflow Name
-###########################################################################################
+# ###########################################################################################
+# # Workflow Name
+# ###########################################################################################
 
-name: 'Upload S3'
+# name: 'Upload S3'
 
-###########################################################################################
-# Workflow Dispatch
-###########################################################################################
+# ###########################################################################################
+# # Workflow Dispatch
+# ###########################################################################################
 
-on:
-  workflow_dispatch:
-  push:
-  # pull_request:
-    branches:
-      # - qa
-      # - prod
-      - dev
-    paths:
-     - 'test/sequence/**'
-     - '.github/workflows/upload-s3.yml'
+# on:
+#   workflow_dispatch:
+#   push:
+#   # pull_request:
+#     branches:
+#       # - qa
+#       # - prod
+#       - dev
+#     paths:
+#      - 'test/sequence/**'
+#      - '.github/workflows/upload-s3.yml'
     
-  # release:
-  #     types:
-  #       - published
+#   # release:
+#   #     types:
+#   #       - published
         
-###########################################################################################
-# Permissions
-###########################################################################################
+# ###########################################################################################
+# # Permissions
+# ###########################################################################################
 
-permissions:
-  contents: 'read'
-  id-token: 'write'
+# permissions:
+#   contents: 'read'
+#   id-token: 'write'
 
-###########################################################################################
-# Use the Bash shell regardless whether the GitHub Actions runners
-###########################################################################################
+# ###########################################################################################
+# # Use the Bash shell regardless whether the GitHub Actions runners
+# ###########################################################################################
 
-defaults:
-  run:
-    shell: bash
+# defaults:
+#   run:
+#     shell: bash
 
-###########################################################################################
-# Global Environment Variables
-###########################################################################################
+# ###########################################################################################
+# # Global Environment Variables
+# ###########################################################################################
 
-env:
-  PYTHON_VERSION: 3.9.12
-  aws-region: ${{ vars.AWS_REGION }}
-  WORKSPACE: ${{ github.ref_name == 'dev' && 'DEV' || 'QA' }}
+# env:
+#   PYTHON_VERSION: 3.9.12
+#   aws-region: ${{ vars.AWS_REGION }}
+#   WORKSPACE: ${{ github.ref_name == 'dev' && 'DEV' || 'QA' }}
 
-##########################################################################################
-# Build and uplaod Artifact to S3
-###########################################################################################
+# ##########################################################################################
+# # Build and uplaod Artifact to S3
+# ###########################################################################################
 
-jobs:
-  Upload_S3:
-    name: 'Upload_S3'
-    runs-on: ubuntu-latest
-    environment: ${{ github.ref_name }}
-    env:
-      TF_VAR_commit_id: ${{ github.sha }}
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+# jobs:
+#   Upload_S3:
+#     name: 'Upload_S3'
+#     runs-on: ubuntu-latest
+#     environment: ${{ github.ref_name }}
+#     env:
+#       TF_VAR_commit_id: ${{ github.sha }}
+#     steps:
+#       - name: checkout
+#         uses: actions/checkout@v3
+#         with:
+#           fetch-depth: 0
 
-###########################################################################################
-# AWS Creds
-########################################################################################### 
+# ###########################################################################################
+# # AWS Creds
+# ########################################################################################### 
 
-      - name: Configure AWS credentials from AWS account
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-            role-to-assume: ${{ vars.AWS_ROLE }}
-            aws-region: ${{ vars.AWS_REGION }}
+#       - name: Configure AWS credentials from AWS account
+#         uses: aws-actions/configure-aws-credentials@v2
+#         with:
+#             role-to-assume: ${{ vars.AWS_ROLE }}
+#             aws-region: ${{ vars.AWS_REGION }}
 
 
-      - name: Install zip
-        uses: montudor/action-zip@v1
+#       - name: Install zip
+#         uses: montudor/action-zip@v1
 
           
-      - name: Zip sequence code and upload to S3
-        working-directory: ./test/sequence
-        run: |
-            zip -qq -r sequence_${{ github.ref_name }}.zip ./
-            aws s3 cp sequence_${{ github.ref_name }}.zip s3://${{ vars[format('AWS_S3_BUCKET_CODE_{0}', env.WORKSPACE)] }}/${{ vars.AWS_S3_BUCKET_FOLDER }}
+#       - name: Zip sequence code and upload to S3
+#         working-directory: ./test/sequence
+#         run: |
+#             zip -qq -r sequence_${{ github.ref_name }}.zip ./
+#             aws s3 cp sequence_${{ github.ref_name }}.zip s3://${{ vars[format('AWS_S3_BUCKET_CODE_{0}', env.WORKSPACE)] }}/${{ vars.AWS_S3_BUCKET_FOLDER }}
